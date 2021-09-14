@@ -2,15 +2,13 @@ package com.example.firstspringproject.controllers;
 
 import com.example.firstspringproject.dao.UserDao;
 import com.example.firstspringproject.models.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 
 public class MainController {
 
@@ -23,10 +21,12 @@ public class MainController {
     @GetMapping("/users")
     public List<User> user() {
         List<User> all = userDao.findAll();
-        return all ;
+        return all;
     }
+
     @PostMapping("/user")
-    public void saveUser(@RequestBody User user) {
+    public void save(@RequestBody User user) {
         System.out.println(user);
+        userDao.save(user);
     }
 }
