@@ -1,35 +1,43 @@
 package com.example.firstspringproject.controllers;
 
-import com.example.firstspringproject.dao.userDAO;
 import com.example.firstspringproject.models.User;
+import com.example.firstspringproject.services.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
-@Data
+@AllArgsConstructor
+@RequestMapping("/users")
+@CrossOrigin(origins = {"http://localhost:3000"})
+
 public class MainController {
 
-    private userDAO userDao;
+    private UserService userService;
 
-    @GetMapping("/")
-    public String start() {
-        return "server work";
+    @GetMapping("/get_all")
+    public List<User> all() {
+        return userService.getAllUsers();
     }
 
-    @GetMapping("/get_users")
-    public List<User> getAllUsers() {
-        return userDao.findAll();
+    @PostMapping("/add")
+    public void add(@RequestBody User user) {
+        userService.addUser(user);
     }
 
-    @PostMapping("/add_user")
-    public String add(@RequestBody User user) {
-        userDao.save(user);
-        return "OK";
+    @PatchMapping("/update")
+    public List<User> update(@RequestBody User user) {
+        return userService.updateUser(user);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public List<User> deleteOne(@PathVariable int id) {
+        return userService.deleteUser(id);
+    }
+
+    @DeleteMapping("/delete_all")
+    public List<User> deleteAll() {
+        return userService.deleteAllUsers();
+    }
 }
