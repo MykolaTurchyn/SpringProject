@@ -24,7 +24,6 @@ public class UserService {
 //            System.out.println("must have special character");
 //        }else
             userDAO.save(user);
-            userDAO.findAll();
     }
 
     public List<User> updateUser(User user) {
