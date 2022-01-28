@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:3000")
 
 public class MainController {
     private UserDAO userDAO;
@@ -23,9 +23,9 @@ public class MainController {
     }
 
     @PostMapping("/users")
-    public void adduser(@RequestBody User user) {
+    public List<User> adduser(@RequestBody User user) {
         userDAO.save(user);
-//        return user;
+        return userDAO.findAll();
     }
 
     @DeleteMapping("/users/{id}")
